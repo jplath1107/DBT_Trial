@@ -162,5 +162,6 @@ select
     driver1,
     driver2,
     division,
-    fleet
+    fleet,
+    '0' as cnt
 from aggregated
