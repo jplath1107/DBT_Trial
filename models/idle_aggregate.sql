@@ -3,7 +3,8 @@
         materialized='incremental',
         incremental_strategy='delete+insert',
         unique_key='idle_aggregate_id',
-        cluster_by=['date']
+        cluster_by=['date'],
+        on_schema_change='sync_all_columns'
     )
 }}
 
