@@ -1,0 +1,61 @@
+version: 2
+
+sources:
+  - name: peoplenet
+    database: PROD_DIG
+    schema: peoplenet
+    tables:
+      - name: performxbydriverdata
+
+  - name: cccfilec
+    database: PROD_DIG
+    schema: cccfilec
+    tables:
+      - name: unitsrv
+
+  - name: cccfilet
+    database: PROD_DIG
+    schema: cccfilet
+    tables:
+      - name: unitsrv
+
+  - name: dbo
+    database: PROD_DIG
+    schema: dbo
+    tables:
+      - name: dim_date
+
+  - name: iesfilec
+    database: PROD_DIG
+    schema: iesfilec
+    tables:
+      - name: units
+
+
+
+models:
+  - name: idle_aggregate
+    description: Daily idle, movement, engine, fuel, and service-assignment metrics at the vehicle and driver-assignment grain. Incremental runs recompute the most recent 10 days to incorporate late telemetry.
+    columns:
+      - name: idle_aggregate_id
+        description: Null-safe surrogate key for the daily vehicle and service-assignment grain.
+      - name: date
+        description: Calendar date of the telemetry segment end time.
+        data_tests:
+          - not_null
+      - name: vehicle_number
+        description: Vehicle number associated with the telemetry segment.
+      - name: engine_hours
+        description: Total engine runtime in hours.
+      - name: move_hours
+        description: Total vehicle movement time in hours.
+      - name: idle_hours
+        description: Total short and long idle time in hours.
+      - name: segment_hours
+        description: Total valid telemetry segment duration in hours.
+      - name: traveled_miles
+        description: Total miles traveled across valid telemetry segments.
+      - name: idle_fuel
+        description: Total validated short and long idle fuel consumption.
+      - name: gal_fuel
+        description: Total validated fuel consumption.
