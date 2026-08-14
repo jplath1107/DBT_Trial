@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: bronze_units
+    columns:
+      - name: Tractor_code
+        data_tests:
+          - unique
+          - not_null
