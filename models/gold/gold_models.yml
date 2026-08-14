@@ -1,38 +1,5 @@
 version: 2
 
-sources:
-  - name: peoplenet
-    database: PROD_DIG
-    schema: peoplenet
-    tables:
-      - name: performxbydriverdata
-
-  - name: cccfilec
-    database: PROD_DIG
-    schema: cccfilec
-    tables:
-      - name: unitsrv
-
-  - name: cccfilet
-    database: PROD_DIG
-    schema: cccfilet
-    tables:
-      - name: unitsrv
-
-  - name: dbo
-    database: PROD_DIG
-    schema: dbo
-    tables:
-      - name: dim_date
-
-  - name: iesfilec
-    database: PROD_DIG
-    schema: iesfilec
-    tables:
-      - name: units
-
-
-
 models:
   - name: idle_aggregate
     description: Daily idle, movement, engine, fuel, and service-assignment metrics at the vehicle and driver-assignment grain. Incremental runs recompute the most recent 10 days to incorporate late telemetry.

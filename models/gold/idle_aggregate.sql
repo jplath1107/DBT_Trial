@@ -71,8 +71,8 @@ enriched_idle_segments as (
         segments.login,
         segments.drivername,
         segments.vehicle_number,
-        units.unmake as vehicle_make,
-        units.unyear as vehicle_model,
+        units.make as vehicle_make,
+        units.year_made as vehicle_model,
         cast(segments.end_datime as date) as date,
         segments.eng_time,
         segments.mov_time,
@@ -94,8 +94,8 @@ enriched_idle_segments as (
     left join terminal_unit_service as terminal_service
         on trim(segments.vehicle_number) = trim(terminal_service.srvunt)
        and cast(segments.end_datime as date) = dateadd(day, -1, terminal_service.date)
-    left join {{ source('iesfilec', 'units') }} as units
-        on trim(segments.vehicle_number) = trim(units.ununit)
+    left join {{ ref('bronze_units') }} as units
+        on trim(segments.vehicle_number) = trim(units.tractor_code)
 ),
 
 aggregated as (
