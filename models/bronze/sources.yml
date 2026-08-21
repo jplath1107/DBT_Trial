@@ -22,25 +22,25 @@ sources:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field: FIADDD
+          loaded_at_query: "select max(to_timestamp_tz(to_char(convert_timezone('America/Chicago', 'UTC', FIADDD), 'YYYY-MM-DD HH24:MI:SS.FF9') || ' +00:00')) as loaded_at from PROD_DIG.CCCFILEC.OP0568FLT"
       - name: op0131sch
         config:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field: SCHADDD
+          loaded_at_query: "select max(to_timestamp_tz(to_char(convert_timezone('America/Chicago', 'UTC', SCHADDD), 'YYYY-MM-DD HH24:MI:SS.FF9') || ' +00:00')) as loaded_at from PROD_DIG.CCCFILEC.OP0131SCH"
       - name: op0568trp
         config:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field: TDTMS
+          loaded_at_query: "select max(to_timestamp_tz(to_char(convert_timezone('America/Chicago', 'UTC', TDTMS), 'YYYY-MM-DD HH24:MI:SS.FF9') || ' +00:00')) as loaded_at from PROD_DIG.CCCFILEC.OP0568TRP"
       - name: op0710bp
         config:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field: PROCESSED_TMS
+          loaded_at_query: "select max(to_timestamp_tz(to_char(convert_timezone('America/Chicago', 'UTC', PROCESSED_TMS), 'YYYY-MM-DD HH24:MI:SS.FF9') || ' +00:00')) as loaded_at from PROD_DIG.CCCFILEC.OP0710BP"
 
   - name: cccfilet
     database: PROD_DIG
@@ -59,7 +59,7 @@ sources:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field: EARLY_APPT_DATETIME
+          loaded_at_query: "select max(to_timestamp_tz(to_char(convert_timezone('America/Chicago', 'UTC', EARLY_APPT_DATETIME), 'YYYY-MM-DD HH24:MI:SS.FF9') || ' +00:00')) as loaded_at from PROD_DIG.DBO.LATE_FEES_BILLING"
 
   - name: iesfilec
     database: PROD_DIG
