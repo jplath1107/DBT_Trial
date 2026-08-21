@@ -12,6 +12,35 @@ sources:
     schema: cccfilec
     tables:
       - name: unitsrv
+      - name: op0516aa
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+      - name: op0568flt
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field: FIADDD
+      - name: op0131sch
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field: SCHADDD
+      - name: op0568trp
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field: TDTMS
+      - name: op0710bp
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field: PROCESSED_TMS
 
   - name: cccfilet
     database: PROD_DIG
@@ -24,9 +53,44 @@ sources:
     schema: dbo
     tables:
       - name: dim_date
+      - name: dim_time
+      - name: late_fees_billing
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field: LOAD_DATE
 
   - name: iesfilec
     database: PROD_DIG
     schema: iesfilec
     tables:
       - name: units
+      - name: billing
+      - name: order
+        identifier: ORDER
+        quoting:
+          identifier: true
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field: OR_WTIMS
+      - name: stopoff
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field: SO_WTIMS
+      - name: custmast
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+      - name: cities
+      - name: comment
+        config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field: OC_WTIMS

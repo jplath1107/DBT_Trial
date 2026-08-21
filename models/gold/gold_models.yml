@@ -26,3 +26,31 @@ models:
         description: Total validated short and long idle fuel consumption.
       - name: gal_fuel
         description: Total validated fuel consumption.
+
+
+  - name: gold_late_fees_audit
+    description: Audit-ready late-fee advance detail at the latest trip, advance-reason, and fee-timestamp grain for the trailing 24 months.
+    columns:
+      - name: late_fee_audit_id
+        description: Null-safe surrogate key for the deduplicated late-fee audit record.
+        data_tests:
+          - not_null
+          - unique
+      - name: trip_num
+        description: Trimmed order or trip number associated with the advance.
+        data_tests:
+          - not_null
+      - name: stop_num
+        description: Stop number associated with the advance.
+      - name: advance_reason
+        description: Normalized advance event reason.
+        data_tests:
+          - not_null
+      - name: fee_amount
+        description: Amount of the recorded advance fee.
+      - name: fee_datetime
+        description: Timestamp of the latest advance record retained for the trip and reason.
+      - name: late_fee_approval
+        description: Approval status parsed from the latest customer-contact comment.
+      - name: bill_pay_approval
+        description: Approval status derived from billing and customer-approval records.
