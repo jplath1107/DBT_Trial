@@ -59,7 +59,7 @@ sources:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field: LOAD_DATE
+          loaded_at_field: EARLY_APPT_DATETIME
 
   - name: iesfilec
     database: PROD_DIG
