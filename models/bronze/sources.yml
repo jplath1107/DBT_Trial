@@ -75,13 +75,11 @@ sources:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field: OR_WTIMS
       - name: stopoff
         config:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field: SO_WTIMS
       - name: custmast
         config:
           freshness:
