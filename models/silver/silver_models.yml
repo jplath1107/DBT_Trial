@@ -1,0 +1,113 @@
+version: 2
+
+models:
+  - name: silver_order
+    description: >
+      One record per source order from iesfilec.order. This view preserves the
+
+      operational order grain and translates source field names into business-facing snake_case
+      columns. Julian date fields use the YYYYDDD format and time fields use HHMI; paired values are
+      converted into timezone-free Gregorian TIMESTAMP_NTZ columns. A source date of 0 or blank time
+      produces a null derived datetime. Write timestamps are null when the source audit value is blank.
+
+    columns:
+      - name: order_number
+        description: Source order identifier.
+      - name: order_status
+        description: Current operational status of the order.
+      - name: order_date
+        description: Raw source order date in Julian YYYYDDD format.
+      - name: order_time
+        description: Raw source order time in HHMI format.
+      - name: order_datetime
+        description: Gregorian timestamp created from order_date and order_time.
+      - name: shipper
+        description: Shipper associated with the order.
+      - name: customer
+        description: Customer or consignee associated with the order.
+      - name: bill_to
+        description: Party responsible for billing.
+      - name: commodity_code
+        description: Code identifying the shipped commodity.
+      - name: commodity_description
+        description: Description of the shipped commodity.
+      - name: order_weight
+        description: Recorded weight of the order.
+      - name: number_of_pieces
+        description: Number of pieces on the order.
+      - name: origin_city
+        description: Origin city for the order.
+      - name: origin_state
+        description: Origin state for the order.
+      - name: origin_zone
+        description: Origin zone for the order.
+      - name: origin_region
+        description: Origin region for the order.
+      - name: destination_city
+        description: Destination city for the order.
+      - name: destination_state
+        description: Destination state for the order.
+      - name: destination_zone
+        description: Destination zone for the order.
+      - name: destination_region
+        description: Destination region for the order.
+      - name: miles
+        description: Total miles for the order.
+      - name: loaded_miles
+        description: Miles traveled while loaded.
+      - name: empty_miles
+        description: Miles traveled while empty.
+      - name: early_pickup_date
+        description: Raw early pickup date in Julian YYYYDDD format.
+      - name: early_pickup_time
+        description: Raw early pickup time in HHMI format.
+      - name: early_pickup_datetime
+        description: Gregorian timestamp created from early_pickup_date and early_pickup_time.
+      - name: early_delivery_date
+        description: Raw early delivery date in Julian YYYYDDD format.
+      - name: early_delivery_time
+        description: Raw early delivery time in HHMI format.
+      - name: early_delivery_datetime
+        description: Gregorian timestamp created from early_delivery_date and early_delivery_time.
+      - name: late_pickup_date
+        description: Raw late pickup date in Julian YYYYDDD format.
+      - name: late_pickup_time
+        description: Raw late pickup time in HHMI format.
+      - name: late_pickup_datetime
+        description: Gregorian timestamp created from late_pickup_date and late_pickup_time.
+      - name: late_delivery_date
+        description: Raw late delivery date in Julian YYYYDDD format.
+      - name: late_delivery_time
+        description: Raw late delivery time in HHMI format.
+      - name: late_delivery_datetime
+        description: Gregorian timestamp created from late_delivery_date and late_delivery_time.
+      - name: ship_date
+        description: Raw ship date in Julian YYYYDDD format.
+      - name: ship_time
+        description: Raw ship time in HHMI format.
+      - name: ship_datetime
+        description: Gregorian timestamp created from ship_date and ship_time.
+      - name: last_update_date
+        description: Raw source update date in Julian YYYYDDD format.
+      - name: last_update_time
+        description: Raw source update time in HHMI format.
+      - name: last_update_datetime
+        description: Gregorian timestamp created from last_update_date and last_update_time.
+      - name: write_timestamp
+        description: Source record write timestamp, parsed from the source audit string. Null when the source value is blank or malformed.
+      - name: writer_user_id
+        description: User identifier that wrote the source record.
+      - name: update_timestamp
+        description: Source record update timestamp, parsed from the source audit string.
+      - name: update_user_id
+        description: User identifier that last updated the source record.
+      - name: company_number
+        description: Company number associated with the order.
+      - name: division_number
+        description: Division number associated with the order.
+      - name: terminal_number
+        description: Terminal number associated with the order.
+      - name: future_use_datetime
+        description: Gregorian timestamp created from the future-use Julian date and HHMI time fields.
+      - name: filler_future_use_datetime
+        description: Gregorian timestamp created from the filler future-use Julian date and HHMI time fields.
