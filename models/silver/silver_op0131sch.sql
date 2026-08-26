@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='schedule_assignments') }}
+{{ config(materialized='view') }}
 
 select *
 from {{ source('cccfilec', 'op0131sch') }}

@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='cities') }}
+{{ config(materialized='view') }}
 
 select *
 from {{ source('iesfilec', 'cities') }}

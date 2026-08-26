@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='customer_master') }}
+{{ config(materialized='view') }}
 
 select
     source.*,

@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='driver_performance') }}
+{{ config(materialized='view') }}
 
 select *
 from {{ source('peoplenet', 'performxbydriverdata') }}

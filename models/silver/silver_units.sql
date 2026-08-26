@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='units') }}
+{{ config(materialized='view') }}
 
 select
     source.*,
