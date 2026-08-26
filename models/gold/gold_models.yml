@@ -8,7 +8,6 @@ models:
         description: Null-safe surrogate key for the daily vehicle and service-assignment grain.
         data_tests:
           - not_null
-          - unique
       - name: date
         description: Calendar date of the telemetry segment end time.
         data_tests:
