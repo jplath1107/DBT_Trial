@@ -13,6 +13,9 @@ models:
     columns:
       - name: order_number
         description: Source order identifier.
+        data_tests:
+          - not_null
+          - unique
       - name: order_status
         description: Current operational status of the order.
       - name: order_date
@@ -147,3 +150,127 @@ models:
         description: Source record write timestamp, parsed from the source audit string.
       - name: update_timestamp
         description: Source record update timestamp, parsed from the source audit string.
+
+
+
+  - name: silver_billing
+    description: Source-aligned billing detail from iesfilec.billing. Documented source columns are exposed with normalized comment-based aliases, alongside parsed write and update timestamps.
+    columns:
+      - name: write_timestamp
+        description: Timestamp parsed from the source BI_WTIMS audit field.
+      - name: update_timestamp
+        description: Timestamp parsed from the source BI_UTIMS audit field.
+
+  - name: silver_cccfilec_unitsrv
+    description: Current unit-service detail from cccfilec.unitsrv, with documented source-column aliases and derived Julian date and timestamp fields.
+    columns:
+      - name: service_date
+        description: Gregorian calendar date derived from the source Julian service date.
+      - name: trip_movement_datetime
+        description: Timestamp derived from the source trip movement Julian date and time.
+      - name: estimated_arrival_datetime
+        description: Timestamp derived from the source estimated-arrival Julian date and time.
+      - name: projected_available_datetime
+        description: Timestamp derived from the source projected-availability Julian date and time.
+      - name: contact_datetime
+        description: Timestamp derived from the source contact Julian date and time.
+
+  - name: silver_cccfilet_unitsrv
+    description: Historical unit-service detail from cccfilet.unitsrv, with documented source-column aliases and derived Julian date and timestamp fields.
+    columns:
+      - name: service_date
+        description: Gregorian calendar date derived from the source Julian service date.
+      - name: trip_movement_datetime
+        description: Timestamp derived from the source trip movement Julian date and time.
+      - name: estimated_arrival_datetime
+        description: Timestamp derived from the source estimated-arrival Julian date and time.
+      - name: projected_available_datetime
+        description: Timestamp derived from the source projected-availability Julian date and time.
+      - name: contact_datetime
+        description: Timestamp derived from the source contact Julian date and time.
+
+  - name: silver_cities
+    description: Source-aligned city reference data from iesfilec.cities. Source column names are retained because the Snowflake source has no column comments.
+
+  - name: silver_comment
+    description: Operational order comments from iesfilec.comment. Documented source columns use normalized aliases, with derived operational and audit timestamps.
+    columns:
+      - name: comment_date
+        description: Gregorian calendar date derived from the source comment Julian date.
+      - name: created_datetime
+        description: Timestamp derived from the source comment create date and time.
+      - name: changed_datetime
+        description: Timestamp derived from the source comment change date and time.
+      - name: write_timestamp
+        description: Timestamp parsed from the source OC_WTIMS audit field.
+      - name: update_timestamp
+        description: Timestamp parsed from the source OC_UTIMS audit field.
+
+  - name: silver_custmast
+    description: Customer-master detail from iesfilec.custmast, with documented source-column aliases, derived Julian dates, and parsed audit timestamps.
+    columns:
+      - name: last_update_datetime
+        description: Timestamp derived from the source last-update Julian date and time.
+      - name: contract_date
+        description: Gregorian calendar date derived from the source contract date.
+      - name: contract_mailed_date
+        description: Gregorian calendar date derived from the source contract-mail date.
+      - name: contract_signed_date
+        description: Gregorian calendar date derived from the source contract-sign date.
+      - name: write_timestamp
+        description: Timestamp parsed from the source CU_WTIMS audit field.
+      - name: update_timestamp
+        description: Timestamp parsed from the source CU_UTIMS audit field.
+
+  - name: silver_dim_date
+    description: Date dimension from dbo.dim_date. Source column names are retained because the Snowflake source has no column comments.
+
+  - name: silver_dim_time
+    description: Time dimension from dbo.dim_time. Source column names are retained because the Snowflake source has no column comments.
+
+  - name: silver_late_fees_billing
+    description: Legacy late-fee billing detail from dbo.late_fees_billing. Source column names are retained because the Snowflake source has no column comments.
+
+  - name: silver_op0131sch
+    description: Schedule-assignment detail from cccfilec.op0131sch, with documented source-column aliases normalized to snake_case.
+
+  - name: silver_op0516aa
+    description: Advance-record detail from cccfilec.op0516aa, with documented source-column aliases and a derived advance timestamp.
+    columns:
+      - name: advance_datetime
+        description: Timestamp derived from the source advance Julian date and time.
+
+  - name: silver_op0568flt
+    description: User-filter detail from cccfilec.op0568flt, with documented source-column aliases normalized to snake_case.
+
+  - name: silver_op0568trp
+    description: Trip-dispatch detail from cccfilec.op0568trp, with documented source-column aliases normalized to snake_case.
+
+  - name: silver_op0710bp
+    description: Bill-pay detail from cccfilec.op0710bp, with documented source-column aliases and derived Gregorian date fields.
+    columns:
+      - name: event_date_gregorian
+        description: Gregorian calendar date derived from the source event Julian date.
+      - name: date_from_gregorian
+        description: Gregorian calendar date derived from the source effective-start Julian date.
+      - name: date_to_gregorian
+        description: Gregorian calendar date derived from the source effective-end Julian date.
+
+  - name: silver_performxbydriverdata
+    description: Driver-performance detail from peoplenet.performxbydriverdata. Source column names are retained because the Snowflake source has no column comments.
+
+  - name: silver_units
+    description: Unit-master detail from iesfilec.units, with documented source-column aliases, derived Julian dates, and parsed audit timestamps.
+    columns:
+      - name: termination_date
+        description: Gregorian calendar date derived from the source termination Julian date.
+      - name: hire_date
+        description: Gregorian calendar date derived from the source hire Julian date.
+      - name: estimated_arrival_datetime
+        description: Timestamp derived from the source estimated-arrival Julian date and time.
+      - name: projected_available_datetime
+        description: Timestamp derived from the source projected-availability Julian date and time.
+      - name: write_timestamp
+        description: Timestamp parsed from the source U1_WTIMS audit field.
+      - name: update_timestamp
+        description: Timestamp parsed from the source U1_UTIMS audit field.
