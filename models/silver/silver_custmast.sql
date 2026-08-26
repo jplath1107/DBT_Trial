@@ -10,5 +10,13 @@ select
     {{ julian_date('source.cucdat') }} as contract_date,
     {{ julian_date('source.cumdat') }} as contract_mailed_date,
     {{ julian_date('source.cucsdt') }} as contract_signed_date,
-    {{ julian_date('source.cumldt') }} as last_mailing_date
+    {{ julian_date('source.cumldt') }} as last_mailing_date,
+    try_to_timestamp_ntz(
+        nullif(trim(source.cu_wtims), ''),
+        'YYYY-MM-DD-HH24.MI.SS.FF6'
+    ) as write_timestamp,
+    try_to_timestamp_ntz(
+        nullif(trim(source.cu_utims), ''),
+        'YYYY-MM-DD-HH24.MI.SS.FF6'
+    ) as update_timestamp
 from {{ source('iesfilec', 'custmast') }} as source

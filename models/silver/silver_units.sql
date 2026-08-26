@@ -12,5 +12,13 @@ select
     {{ julian_datetime('source.unpda', 'source.unpta') }} as projected_available_datetime,
     {{ julian_date('source.unpcdt') }} as projected_availability_change_date,
     {{ julian_date('source.unhdte') }} as temporary_hold_date,
-    {{ julian_date('source.unusr1') }} as user_defined_date
+    {{ julian_date('source.unusr1') }} as user_defined_date,
+    try_to_timestamp_ntz(
+        nullif(trim(source.u1_wtims), ''),
+        'YYYY-MM-DD-HH24.MI.SS.FF6'
+    ) as write_timestamp,
+    try_to_timestamp_ntz(
+        nullif(trim(source.u1_utims), ''),
+        'YYYY-MM-DD-HH24.MI.SS.FF6'
+    ) as update_timestamp
 from {{ source('iesfilec', 'units') }} as source
