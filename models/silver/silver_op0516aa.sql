@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='advance_records') }}
+{{ config(materialized='view') }}
 
 select
     source.*,

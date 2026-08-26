@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='user_filters') }}
+{{ config(materialized='view') }}
 
 select *
 from {{ source('cccfilec', 'op0568flt') }}

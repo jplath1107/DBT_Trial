@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='bill_pay') }}
+{{ config(materialized='view') }}
 
 select
     source.*,

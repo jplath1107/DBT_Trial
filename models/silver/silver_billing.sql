@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='billing') }}
+{{ config(materialized='view') }}
 
 select *
 from {{ source('iesfilec', 'billing') }}

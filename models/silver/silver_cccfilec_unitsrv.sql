@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='current_unit_service') }}
+{{ config(materialized='view') }}
 
 select
     source.*,

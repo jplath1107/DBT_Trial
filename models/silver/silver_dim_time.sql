@@ -1,4 +1,4 @@
-{{ config(materialized='view', alias='time_dimension') }}
+{{ config(materialized='view') }}
 
 select *
 from {{ source('dbo', 'dim_time') }}
