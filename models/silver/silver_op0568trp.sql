@@ -1,4 +1,7 @@
 {{ config(materialized='view') }}
 
-select *
-from {{ source('cccfilec', 'op0568trp') }}
+{% set trip_source = source('cccfilec', 'op0568trp') %}
+
+select
+    {{ select_columns_from_comments(trip_source, 'source') }}
+from {{ trip_source }} as source
