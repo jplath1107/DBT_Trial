@@ -1,6 +1,8 @@
 {{ config(materialized='view') }}
 
+{% set advance_source = source('cccfilec', 'op0516aa') %}
+
 select
-    source.*,
+    {{ select_columns_from_comments(advance_source, 'source', ['advance_datetime']) }},
     {{ julian_datetime('source.sa09a', 'source.sa10a') }} as advance_datetime
-from {{ source('cccfilec', 'op0516aa') }} as source
+from {{ advance_source }} as source

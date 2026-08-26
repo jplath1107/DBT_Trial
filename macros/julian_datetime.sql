@@ -52,3 +52,74 @@
             )
     end
 {% endmacro %}
+
+
+
+{% macro select_columns_from_comments(source_relation, relation_alias, reserved_aliases=[]) %}
+    {% if execute %}
+        {% set comment_column_query %}
+            with normalized_columns as (
+                select
+                    column_name,
+                    ordinal_position,
+                    nullif(
+                        regexp_replace(
+                            regexp_replace(lower(trim(comment)), '[^a-z0-9]+', '_'),
+                            '(^_+|_+$)',
+                            ''
+                        ),
+                        ''
+                    ) as normalized_comment
+                from {{ source_relation.database }}.information_schema.columns
+                where table_schema = upper('{{ source_relation.schema }}')
+                  and table_name = upper('{{ source_relation.identifier }}')
+            ),
+
+            candidate_columns as (
+                select
+                    column_name,
+                    ordinal_position,
+                    case
+                        when normalized_comment is null then column_name
+                        when count(*) over (partition by normalized_comment) > 1 then column_name
+                        else normalized_comment
+                    end as alias_name
+                from normalized_columns
+            ),
+
+            unique_columns as (
+                select
+                    column_name,
+                    ordinal_position,
+                    alias_name,
+                    count(*) over (partition by alias_name) as alias_count
+                from candidate_columns
+            )
+
+            select
+                column_name,
+                case
+                    when alias_count > 1 then column_name
+                    else alias_name
+                end as alias_name
+            from unique_columns
+            order by ordinal_position
+        {% endset %}
+
+        {% set columns = run_query(comment_column_query) %}
+
+        {% for column in columns %}
+            {% set column_name = column[0] %}
+            {% set alias_name = column[1] %}
+            {% set output_alias = alias_name %}
+            {% if output_alias | lower in reserved_aliases %}
+                {% set output_alias = output_alias ~ '_raw' %}
+            {% endif %}
+
+            {{ relation_alias }}.{{ adapter.quote(column_name) }} as {{ adapter.quote(output_alias | upper) }}
+            {%- if not loop.last %},{% endif %}
+        {% endfor %}
+    {% else %}
+        {{ relation_alias }}.*
+    {% endif %}
+{% endmacro %}
