@@ -1,6 +1,7 @@
 {{
     config(
-        materialized='view'
+        materialized='view',
+        alias='order_stops'
     )
 }}
 
