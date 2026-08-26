@@ -6,6 +6,9 @@ models:
     columns:
       - name: idle_aggregate_id
         description: Null-safe surrogate key for the daily vehicle and service-assignment grain.
+        data_tests:
+          - not_null
+          - unique
       - name: date
         description: Calendar date of the telemetry segment end time.
         data_tests:
@@ -54,3 +57,35 @@ models:
         description: Approval status parsed from the latest customer-contact comment.
       - name: bill_pay_approval
         description: Approval status derived from billing and customer-approval records.
+
+
+
+  - name: gold_late_fees_billing
+    description: Billing detail for late-fee advances at the source trip and stop billing-event grain. This dbt-managed replacement for dbo.late_fees_billing supports late-fee audit reporting.
+    columns:
+      - name: trip
+        description: Trimmed order or trip number associated with the late-fee advance.
+        data_tests:
+          - not_null
+      - name: stop
+        description: Stop number associated with the late-fee advance.
+      - name: fee
+        description: Amount recorded for the late-fee advance.
+      - name: advance_reason
+        description: Advance reason, filtered to LATE FEE.
+        data_tests:
+          - not_null
+      - name: shipper_code
+        description: Shipper code from the associated order.
+      - name: consignee
+        description: Consignee from the associated order.
+      - name: load_date
+        description: Calendar date the associated order was loaded.
+      - name: empty_date
+        description: Calendar date the associated equipment became empty.
+      - name: fee_charged_to_customer_old
+        description: Historical billing amount matched to the late-fee stop code.
+      - name: early_appointment_datetime
+        description: Early appointment timestamp for the billed stop.
+      - name: late_appt_datetime
+        description: Appointment timestamp for the billed stop.

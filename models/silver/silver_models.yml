@@ -111,3 +111,39 @@ models:
         description: Gregorian timestamp created from the future-use Julian date and HHMI time fields.
       - name: filler_future_use_datetime
         description: Gregorian timestamp created from the filler future-use Julian date and HHMI time fields.
+
+
+
+  - name: silver_stopoff
+    description: >
+      One record per source stopoff from iesfilec.stopoff. This view preserves the
+      operational stop grain and translates source fields into business-facing snake_case columns.
+      Julian YYYYDDD date fields paired with HHMI times are converted to timezone-free
+      TIMESTAMP_NTZ values; a source date of 0 or blank time produces a null derived timestamp.
+    columns:
+      - name: order_number
+        description: Source order identifier associated with the stop.
+      - name: stop_number
+        description: Sequence number of the stop within the order.
+      - name: stop_type
+        description: Source type code for the stop.
+      - name: stop_status
+        description: Current operational status of the stop.
+      - name: customer_code
+        description: Customer code associated with the stop.
+      - name: early_appointment_datetime
+        description: Gregorian timestamp created from the early appointment date and time.
+      - name: appointment_datetime
+        description: Gregorian timestamp created from the appointment date and time.
+      - name: arrival_datetime
+        description: Gregorian timestamp created from the arrival date and time.
+      - name: load_unload_datetime
+        description: Gregorian timestamp created from the load/unload date and time.
+      - name: stop_weight
+        description: Recorded weight associated with the stop.
+      - name: number_of_pieces
+        description: Number of pieces associated with the stop.
+      - name: write_timestamp
+        description: Source record write timestamp, parsed from the source audit string.
+      - name: update_timestamp
+        description: Source record update timestamp, parsed from the source audit string.

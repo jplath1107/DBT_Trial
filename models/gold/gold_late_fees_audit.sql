@@ -287,7 +287,7 @@ left join temp_comment_late_fee
 left join temp_bill_pay
     on reason_detail.trip_num = temp_bill_pay.bill_pay_order_number
    and trim(reason_detail.advance_reason) = trim(temp_bill_pay.bill_pay_event)
-left join {{ source('dbo', 'late_fees_billing') }} as late_fees_billing
+left join {{ ref('gold_late_fees_billing') }} as late_fees_billing
     on reason_detail.trip_num = late_fees_billing.trip
    and reason_detail.fee_amount = late_fees_billing.fee
 left join chargeback
