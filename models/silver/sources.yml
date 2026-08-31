@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: silver
+    description: Silver-layer dbt models available as source relations for downstream consumers.
+    database: "{{ target.database }}"
+    schema: "{{ target.schema }}"
+    tables:
+      - name: silver_billing
+      - name: silver_cccfilec_unitsrv
+      - name: silver_cccfilet_unitsrv
+      - name: silver_cities
+      - name: silver_comment
+      - name: silver_custmast
+      - name: silver_dim_date
+      - name: silver_dim_time
+      - name: silver_late_fees_billing
+      - name: silver_op0131sch
+      - name: silver_op0516aa
+      - name: silver_op0568flt
+      - name: silver_op0568trp
+      - name: silver_op0710bp
+      - name: silver_order
+      config:
+          freshness:
+            warn_after: {count: 30, period: minute}
+            error_after: {count: 60, period: minute}
+          loaded_at_field:  write_timestamp
+      - name: silver_performxbydriverdata
+      - name: silver_stopoff
+      - name: silver_units
