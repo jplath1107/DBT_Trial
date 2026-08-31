@@ -25,7 +25,17 @@ sources:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
-          loaded_at_field:  write_timestamp
+          loaded_at_query: >
+            select max(
+              to_timestamp_tz(
+                to_char(
+                  convert_timezone('America/Chicago', 'UTC', write_timestamp),
+                  'YYYY-MM-DD HH24:MI:SS.FF9'
+                ) || ' +00:00'
+              )
+            ) as loaded_at
+            from {{ target.database }}.{{ target.schema }}.silver_order
+
       - name: silver_performxbydriverdata
       - name: silver_stopoff
       - name: silver_units
