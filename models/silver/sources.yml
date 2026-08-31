@@ -21,7 +21,7 @@ sources:
       - name: silver_op0568trp
       - name: silver_op0710bp
       - name: silver_order
-      config:
+        config:
           freshness:
             warn_after: {count: 30, period: minute}
             error_after: {count: 60, period: minute}
