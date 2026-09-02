@@ -55,7 +55,7 @@
 
 
 
-{% macro select_columns_from_comments(source_relation, relation_alias, reserved_aliases=[]) %}
+{% macro select_columns_from_comments(source_relation, relation_alias, reserved_aliases=[], derived_columns_after={}) %}
     {% if execute %}
         {% set comment_column_query %}
             with normalized_columns as (
@@ -107,6 +107,7 @@
         {% endset %}
 
         {% set columns = run_query(comment_column_query) %}
+        {% set projections = [] %}
 
         {% for column in columns %}
             {% set column_name = column[0] %}
@@ -116,10 +117,15 @@
                 {% set output_alias = output_alias ~ '_raw' %}
             {% endif %}
 
-            {{ relation_alias }}.{{ adapter.quote(column_name) }} as {{ adapter.quote(output_alias | upper) }}
-            {%- if not loop.last %},{% endif %}
+            {% do projections.append(relation_alias ~ '.' ~ adapter.quote(column_name) ~ ' as ' ~ adapter.quote(output_alias | upper)) %}
+            {% for derived_column in derived_columns_after.get(column_name | lower, []) %}
+                {% do projections.append(derived_column) %}
+            {% endfor %}
         {% endfor %}
+
+        {{ projections | join(',\n    ') }}
     {% else %}
         {{ relation_alias }}.*
     {% endif %}
 {% endmacro %}
+
